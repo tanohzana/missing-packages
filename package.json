@@ -14,7 +14,11 @@
     "packages"
   ],
   "author": "Florian Adonis <tanohzana@gmail.com>",
-  "license": "ISC",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tanohzana/missing-packages.git"
+  },
   "dependencies": {
     "fs": "0.0.1-security",
     "inquirer": "^4.0.1",
