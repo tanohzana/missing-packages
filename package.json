@@ -1,6 +1,6 @@
 {
   "name": "missing-packages",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A simple installer for missing packages",
   "main": "index.js",
   "scripts": {
@@ -19,8 +19,8 @@
     "type": "git",
     "url": "https://github.com/tanohzana/missing-packages.git"
   },
+  "bundleDependencies": false,
   "dependencies": {
-    "fs": "0.0.1-security",
     "inquirer": "^4.0.1",
     "shelljs": "^0.7.8"
   }
