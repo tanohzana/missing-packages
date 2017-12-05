@@ -1,0 +1,23 @@
+{
+  "name": "missing-packages",
+  "version": "1.0.0",
+  "description": "A simple installer for missing packages",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "bin": {
+    "mp": "./bin/mp.js"
+  },
+  "keywords": [
+    "missing",
+    "packages"
+  ],
+  "author": "Florian Adonis <tanohzana@gmail.com>",
+  "license": "ISC",
+  "dependencies": {
+    "fs": "0.0.1-security",
+    "inquirer": "^4.0.1",
+    "shelljs": "^0.7.8"
+  }
+}
