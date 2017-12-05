@@ -33,6 +33,7 @@ You can go to the examples/ directory and type:
 `mp --install example2.js`
 
 _This is not perfect but it is getting better by the day_
+
 _Do not hesitate to pull request me_
 
 :relaxed: 
