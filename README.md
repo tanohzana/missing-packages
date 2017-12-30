@@ -6,31 +6,35 @@
 
 # API
 
-### Check missing packages in a file
+### Check missing packages in a file or directory
 
 Go to your project's directory and type:
 
-`mp -c [file path]`
+`mp -c [path]`
 
-ou
+or
 
-`mp --check [file path]`
+`mp --check [path]`
 
-### Install missing packages in a file
+### Install missing packages in a file or directory
 
 Go to your project's directory and type:
 
-`mp -i [file path]`
+`mp -i [path]`
 
-ou
+or
 
-`mp --install [file path]`
+`mp --install [path]`
 
 # Examples
 
 You can go to the examples/ directory and type:
 
 `mp --install example2.js`
+
+or
+
+`mp -c example3`
 
 _This is not perfect but it is getting better by the day_
 
