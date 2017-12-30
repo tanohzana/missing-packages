@@ -73,7 +73,10 @@ var checkDirectory = function(args, cb){
 					console.log("Checking "+path+"/"+file);
 				  	let file2 = fs.readFileSync(path+"/"+file,'utf8');
 
-					packages = packages.concat(extractPackagesToInstall(file2));
+				  	let newPackages = extractPackagesToInstall(file2);
+
+				  	if(newPackages)
+						packages = packages.concat(newPackages);
 				}
 			});
 
