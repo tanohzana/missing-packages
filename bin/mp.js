@@ -66,44 +66,54 @@ var checkDirectory = function(args, cb){
 	let path = process.cwd()+"/"+args[1];
 	let packages = [];
 
-	if(fs.lstatSync(path).isDirectory()){
+	try{
+		if(fs.lstatSync(path).isDirectory()){
+			fs.readdirSync(path).forEach(file => {
+				if(file.match(/.js/g) && !file.match(/.json/g)){
+					console.log("Checking "+path+"/"+file);
+				  	let file2 = fs.readFileSync(path+"/"+file,'utf8');
 
-		fs.readdirSync(path).forEach(file => {
-			console.log("Checking "+path+"/"+file);
-		  	fs.readFile(path+"/"+file,'utf8', (err, file2) => {
-		  		if(err){
-					console.log(err);
-				}else{
-					let fileContent = file2;
-
-					packages = packages.concat(extractPackagesToInstall(fileContent));
-
-					console.log(packages);
+					packages = packages.concat(extractPackagesToInstall(file2));
 				}
 			});
-		});
-	}else{
-		fs.readFile(path,'utf8', (err, file) => {
-			if(err){
-				console.log(err);
-			}else{
-				fileContent = file;
 
-				fs.readFile(process.cwd()+"/package.json",'utf8', (err, file2) => {
-					if(err){
-						console.log(err);
-					}else{
-						let packages = extractPackagesToInstall(fileContent);
-						let installed = JSON.parse(file2).dependencies || {'':''};
-
-						cb(packages, Object.keys(installed));
-					}
-				});
-			}
-		});
+			getPackageJson("package.json", packages, 0, cb);
+		}else{
+			fs.readFile(path,'utf8', (err, file) => {
+				if(err){
+					console.log(err);
+				}else{
+					let packages = extractPackagesToInstall(file);
+					getPackageJson("package.json", packages, 0, cb);
+				}
+			});
+		}
+	}catch(e){
+		if(e.message.substr(0,6) == "ENOENT"){
+			console.log("No such file or directory");
+		}else{
+			console.log(e);
+		}
 	}
 }
 
+
+var getPackageJson = function(packagePath, packages, cpt, cb){
+	fs.readFile(process.cwd()+"/"+packagePath,'utf8', (err, file2) => {
+		if(err){
+			console.log("Going up ..");
+			cpt++;
+			if(cpt<5){
+				getPackageJson("../"+packagePath, packages, cpt, cb)
+			}else{
+				console.log("No package.json");
+			}
+		}else{
+			let installed = JSON.parse(file2).dependencies || {'':''};
+			cb(packages, Object.keys(installed));
+		}
+	});
+}
 
 
 var checkFile = function(cb){
