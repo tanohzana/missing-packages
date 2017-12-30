@@ -64,9 +64,24 @@ var extractPackagesToInstall = function(fileContent){
 
 var checkDirectory = function(args, cb){
 	let path = process.cwd()+"/"+args[1];
+	let packages = [];
 
 	if(fs.lstatSync(path).isDirectory()){
-		console.log("This is a directory. Choose a JS file");
+
+		fs.readdirSync(path).forEach(file => {
+			console.log("Checking "+path+"/"+file);
+		  	fs.readFile(path+"/"+file,'utf8', (err, file2) => {
+		  		if(err){
+					console.log(err);
+				}else{
+					let fileContent = file2;
+
+					packages = packages.concat(extractPackagesToInstall(fileContent));
+
+					console.log(packages);
+				}
+			});
+		});
 	}else{
 		fs.readFile(path,'utf8', (err, file) => {
 			if(err){
@@ -88,6 +103,8 @@ var checkDirectory = function(args, cb){
 		});
 	}
 }
+
+
 
 var checkFile = function(cb){
 	fs.readFile(process.cwd()+"/package.json",'utf8', (err, file2) => {
