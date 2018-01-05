@@ -5,6 +5,7 @@ var shell = require('shelljs');
 var inquirer = require('inquirer');
 
 var packagesToAbsInstall = [];
+var packages = [];
 
 var installPackages = function(packages, installed){
 	let toInstallQuestions = [];
@@ -62,10 +63,8 @@ var extractPackagesToInstall = function(fileContent){
 	return packages2;
 }
 
-var checkDirectory = function(args, cb){
-	let path = process.cwd()+"/"+args[1];
-	let packages = [];
-
+var checkDirectory = function(path, cb){
+	
 	try{
 		if(fs.lstatSync(path).isDirectory()){
 			fs.readdirSync(path).forEach(file => {
@@ -75,8 +74,12 @@ var checkDirectory = function(args, cb){
 
 				  	let newPackages = extractPackagesToInstall(file2);
 
-				  	if(newPackages)
+				  	if(newPackages){
 						packages = packages.concat(newPackages);
+				  	}
+				}else if(fs.lstatSync(path+"/"+file).isDirectory()){
+					console.log(path+"/"+file+" is a directory.");
+					checkDirectory(path+"/"+file, cb)
 				}
 			});
 
@@ -148,13 +151,13 @@ var run = function(){
 
 	if(args[0] == "--install" || args[0] == "-i"){
 		if(args[1]){
-			checkDirectory(args, installPackages)
+			checkDirectory(process.cwd()+"/"+args[1], installPackages)
 		}else{
 			checkFile(installPackages)
 		}
 	}else if(args[0] == "--check" || args[0] == "-c"){
 		if(args[1]){
-			checkDirectory(args, displayPackages)
+			checkDirectory(process.cwd()+"/"+args[1], displayPackages)
 		}else{
 			checkFile(displayPackages)
 		}
