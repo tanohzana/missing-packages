@@ -6,11 +6,13 @@ var inquirer = require('inquirer');
 
 var packagesToAbsInstall = [];
 var packages = [];
+var cptGbl = 0;
+var gblPath = '';
 
 var installPackages = function(packages, installed){
 	let toInstallQuestions = [];
 
-	packages.forEach(async (p) => {
+	packages.forEach((p) => {
 		if(!installed.includes(p)){
 			toInstallQuestions.push({
 			    type: 'confirm',
@@ -32,10 +34,11 @@ var installPackages = function(packages, installed){
 	});
 }
 
-var displayPackages = function(packages, installed){
+var displayPackages = function(packagesToShow, installed){
 	let display = [];
 
-	packages.forEach(async (p) => {
+	packagesToShow.forEach((p) => {
+
 		if(!installed.includes(p)){
 			display.push(p);
 		}
@@ -67,23 +70,34 @@ var checkDirectory = function(path, cb){
 	
 	try{
 		if(fs.lstatSync(path).isDirectory()){
+
+			let directories = [];
+
 			fs.readdirSync(path).forEach(file => {
-				if(file.match(/.js/g) && !file.match(/.json/g)){
-					console.log("Checking "+path+"/"+file);
+				if(file.match(/\.js/g) && !file.match(/\.json/g)){
+				  	
 				  	let file2 = fs.readFileSync(path+"/"+file,'utf8');
-
+				  	
 				  	let newPackages = extractPackagesToInstall(file2);
-
+				  	
 				  	if(newPackages){
-						packages = packages.concat(newPackages);
+				  		newPackages.forEach((p) => {
+				  			if(!packages.includes(p)){
+				  				packages.push(p);
+				  			}
+				  		})
+						// packages = packages.concat(newPackages);
 				  	}
-				}else if(fs.lstatSync(path+"/"+file).isDirectory()){
-					console.log(path+"/"+file+" is a directory.");
+				}else if(fs.lstatSync(path+"/"+file).isDirectory() && file != "node_modules"){
+					directories.push(file);
 					checkDirectory(path+"/"+file, cb)
 				}
 			});
 
-			getPackageJson("package.json", packages, 0, cb);
+			if(path == gblPath){
+				getPackageJson("package.json", packages, 0, cb);
+			}
+
 		}else{
 			fs.readFile(path,'utf8', (err, file) => {
 				if(err){
@@ -105,9 +119,9 @@ var checkDirectory = function(path, cb){
 
 
 var getPackageJson = function(packagePath, packages, cpt, cb){
+
 	fs.readFile(process.cwd()+"/"+packagePath,'utf8', (err, file2) => {
 		if(err){
-			console.log("Going up ..");
 			cpt++;
 			if(cpt<5){
 				getPackageJson("../"+packagePath, packages, cpt, cb)
@@ -151,12 +165,14 @@ var run = function(){
 
 	if(args[0] == "--install" || args[0] == "-i"){
 		if(args[1]){
+			gblPath = process.cwd()+"/"+args[1];
 			checkDirectory(process.cwd()+"/"+args[1], installPackages)
 		}else{
 			checkFile(installPackages)
 		}
 	}else if(args[0] == "--check" || args[0] == "-c"){
 		if(args[1]){
+			gblPath = process.cwd()+"/"+args[1];
 			checkDirectory(process.cwd()+"/"+args[1], displayPackages)
 		}else{
 			checkFile(displayPackages)
