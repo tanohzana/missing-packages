@@ -9,6 +9,7 @@ var packages = [];
 var cptGbl = 0;
 var gblPath = '';
 
+// Prompts the user before installing mssing packages
 var installPackages = function(packages, installed){
 	let toInstallQuestions = [];
 
@@ -34,6 +35,7 @@ var installPackages = function(packages, installed){
 	});
 }
 
+// Displays packages given in parameters
 var displayPackages = function(packagesToShow, installed){
 	let display = [];
 
@@ -47,10 +49,12 @@ var displayPackages = function(packagesToShow, installed){
 	console.log("Packages to install: ",display);
 }
 
+// Installs a single package
 var installOnePackage = function(package){
 	shell.exec('npm install --save '+package);
 }
 
+// Finds all packages to install in a file
 var extractPackagesToInstall = function(fileContent){
 	
 	let packages2 = fileContent.match(/require\(["'][A-Za-z0-9_-]+['"]\)/gi);
@@ -66,6 +70,7 @@ var extractPackagesToInstall = function(fileContent){
 	return packages2;
 }
 
+// Checks all files in a directory
 var checkDirectory = function(path, cb){
 	
 	try{
@@ -86,7 +91,6 @@ var checkDirectory = function(path, cb){
 				  				packages.push(p);
 				  			}
 				  		})
-						// packages = packages.concat(newPackages);
 				  	}
 				}else if(fs.lstatSync(path+"/"+file).isDirectory() && file != "node_modules"){
 					directories.push(file);
@@ -117,7 +121,7 @@ var checkDirectory = function(path, cb){
 	}
 }
 
-
+// Does everything it can to find a package.json, even in parent dirs
 var getPackageJson = function(packagePath, packages, cpt, cb){
 
 	fs.readFile(process.cwd()+"/"+packagePath,'utf8', (err, file2) => {
@@ -135,7 +139,7 @@ var getPackageJson = function(packagePath, packages, cpt, cb){
 	});
 }
 
-
+// Checks a file before deciding weither to install or display
 var checkFile = function(cb){
 	fs.readFile(process.cwd()+"/package.json",'utf8', (err, file2) => {
 		if(err){
@@ -160,6 +164,7 @@ var checkFile = function(cb){
 	});
 }
 
+// Entry point: main function
 var run = function(){
 	var args = process.argv.slice(2);
 
@@ -182,4 +187,5 @@ var run = function(){
 	}
 }
 
+// Run
 run();
