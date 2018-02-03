@@ -8,6 +8,7 @@ var packagesToAbsInstall = [];
 var packages = [];
 var cptGbl = 0;
 var gblPath = '';
+var args;
 
 // Prompts the user before installing mssing packages
 var installPackages = function(packages, installed){
@@ -76,8 +77,6 @@ var checkDirectory = function(path, cb){
 	try{
 		if(fs.lstatSync(path).isDirectory()){
 
-			let directories = [];
-
 			fs.readdirSync(path).forEach(file => {
 				if(file.match(/\.js/g) && !file.match(/\.json/g)){
 				  	
@@ -93,8 +92,9 @@ var checkDirectory = function(path, cb){
 				  		})
 				  	}
 				}else if(fs.lstatSync(path+"/"+file).isDirectory() && file != "node_modules"){
-					directories.push(file);
-					checkDirectory(path+"/"+file, cb)
+					if(args[1] == 'recursive' || args[1] == 'r'){
+						checkDirectory(path+"/"+file, cb)
+					}
 				}
 			});
 
@@ -143,7 +143,7 @@ var getPackageJson = function(packagePath, packages, cpt, cb){
 var checkFile = function(cb){
 	fs.readFile(process.cwd()+"/package.json",'utf8', (err, file2) => {
 		if(err){
-			console.log(err);
+			console.log("\nIt seems like the file was not found. Stop messing with me please :-)\n\n", err);
 		}else{
 			let installed = JSON.parse(file2).dependencies || {};
 			let main = JSON.parse(file2).main || '';
@@ -153,7 +153,7 @@ var checkFile = function(cb){
 
 				fs.readFile(path,'utf8', (err, file) => {
 					if(err){
-						console.log(err);
+						console.log("\nIt seems like the file was not found. Stop messing with me please :-)\n\n", err);
 					}else{
 						let packages = extractPackagesToInstall(file);
 						cb(packages, Object.keys(installed));
@@ -164,24 +164,27 @@ var checkFile = function(cb){
 	});
 }
 
-// Entry point: main function
-var run = function(){
-	var args = process.argv.slice(2);
+// Differenciates between install and check
+var exploit = function(func){
+	if((args[1] == 'recursive' || 'r') && args[2]){
+		gblPath = process.cwd()+"/"+args[2];
+		checkDirectory(process.cwd()+"/"+args[2], func)
+	}else if(args[1]){
+		gblPath = process.cwd()+"/"+args[1];
+		checkDirectory(process.cwd()+"/"+args[1], func)
+	}else{
+		checkFile(func)
+	}
+}
 
-	if(args[0] == "--install" || args[0] == "-i"){
-		if(args[1]){
-			gblPath = process.cwd()+"/"+args[1];
-			checkDirectory(process.cwd()+"/"+args[1], installPackages)
-		}else{
-			checkFile(installPackages)
-		}
-	}else if(args[0] == "--check" || args[0] == "-c"){
-		if(args[1]){
-			gblPath = process.cwd()+"/"+args[1];
-			checkDirectory(process.cwd()+"/"+args[1], displayPackages)
-		}else{
-			checkFile(displayPackages)
-		}
+// Entry point - main function
+var run = function(){
+	args = process.argv.slice(2);
+
+	if(args[0] == "install" || args[0] == "i"){
+		exploit(installPackages);
+	}else if(args[0] == "check" || args[0] == "c"){
+		exploit(displayPackages);
 	}else{
 		checkFile(installPackages);
 	}
