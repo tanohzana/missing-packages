@@ -2,12 +2,12 @@
   "name": "missing-packages",
   "version": "1.3.3",
   "description": "A simple installer for missing packages in your projects/files",
-  "main": "./bin/mp.js",
+  "main": "./index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "bin": {
-    "mp": "./bin/mp.js"
+    "mp": "./index.js"
   },
   "keywords": [
     "missing",

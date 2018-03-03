@@ -1,8 +1,8 @@
 # Installation
 
-### In the terminal
-
-`npm i -g missing-packages`
+1. Open your computer's terminal
+2. Install [NodeJS](http://nodejs.org) if you haven't already
+3. Install the package globally using: `npm i -g missing-packages`
 
 # API
 
