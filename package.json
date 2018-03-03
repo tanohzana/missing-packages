@@ -1,10 +1,11 @@
 {
   "name": "missing-packages",
-  "version": "1.3.3",
+  "version": "1.3.4",
   "description": "A simple installer for missing packages in your projects/files",
   "main": "./index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "precommit": "eslint index.js"
   },
   "bin": {
     "mp": "./index.js"
@@ -25,5 +26,8 @@
   "dependencies": {
     "inquirer": "^4.0.1",
     "shelljs": "^0.7.8"
+  },
+  "devDependencies": {
+    "husky": "^0.14.3"
   }
 }
