@@ -1,8 +1,8 @@
 {
   "name": "missing-packages",
-  "version": "1.3.2",
-  "description": "A simple installer for missing packages",
-  "main": "index.js",
+  "version": "1.3.3",
+  "description": "A simple installer for missing packages in your projects/files",
+  "main": "./bin/mp.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -11,7 +11,9 @@
   },
   "keywords": [
     "missing",
-    "packages"
+    "packages",
+    "install",
+    "global"
   ],
   "author": "Florian Adonis <tanohzana@gmail.com>",
   "license": "MIT",
@@ -21,7 +23,6 @@
   },
   "bundleDependencies": false,
   "dependencies": {
-    "fs": "0.0.1-security",
     "inquirer": "^4.0.1",
     "shelljs": "^0.7.8"
   }

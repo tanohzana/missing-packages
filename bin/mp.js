@@ -8,7 +8,7 @@ let packages = [];
 let gblPath = "";
 let args = [];
 
-// Prompts the user before installing mssing packages
+// Prompts the user before installing missing packages
 let installPackages = function(packages, installed) {
 	let toInstallQuestions = [];
 
@@ -24,8 +24,6 @@ let installPackages = function(packages, installed) {
 	});
 
 	inquirer.prompt(toInstallQuestions).then(answers => {
-		let toInstall = [];
-
 		for (let p in answers) {
 			if (answers[p]) {
 				installOnePackage(p);
@@ -48,8 +46,8 @@ let displayPackages = function(packagesToShow, installed) {
 };
 
 // Installs a single package
-let installOnePackage = function(package) {
-	shell.exec("npm install --save " + package);
+let installOnePackage = function(uniquePackage) {
+	shell.exec("npm install --save " + uniquePackage);
 };
 
 // Finds all packages to install in a file
