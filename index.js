@@ -176,7 +176,7 @@ let exploit = function(func) {
 };
 
 // Entry point - main function
-let run = function() {
+(function() {
 	args = process.argv.slice(2);
 
 	if (args[0] == "install" || args[0] == "i") {
@@ -186,7 +186,4 @@ let run = function() {
 	} else {
 		checkFile(installPackages);
 	}
-};
-
-// Run
-run();
+})();
