@@ -16,41 +16,41 @@ Missing-packages (mp) is a tool you will love to use whenever you create a NodeJ
 
 Go to your project's directory and type:
 
-`mp c [path]`
+`mp -c [path]`
 
 or
 
-`mp check [path]`
+`mp --check [path]`
 
 #### Install missing packages in a file or directory
 
 Go to your project's directory and type:
 
-`mp i [path]`
+`mp -i [path]`
 
 or
 
-`mp install [path]`
+`mp --install [path]`
 
 #### Using recursivity
 
 If you are trying to install all packages present in a directory and the directories inside it, you might want to use recursivity like that:
 
-`mp install recursive example2.js`
+`mp --install --recursive examples`
 
 or
 
-`mp c r example2.js`
+`mp -ir examples`
 
 ## Examples
 
 You can go to the examples/ directory and type:
 
-`mp install example2.js`
+`mp --install example2.js`
 
 or
 
-`mp c example3`
+`mp -c examples`
 
 _This is not perfect but it is getting better by the day_
 

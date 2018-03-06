@@ -9,7 +9,7 @@ let packages = [];
 let gblPath = "";
 let args = [];
 let recursive = false;
-let programVersion = "1.4.0";
+let programVersion = "1.4.1";
 
 // Prompts the user before installing missing packages
 let installPackages = function(packages, installed) {
