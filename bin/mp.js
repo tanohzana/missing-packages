@@ -3,10 +3,13 @@
 const fs = require("fs");
 const shell = require("shelljs");
 const inquirer = require("inquirer");
+const program = require("commander");
 
 let packages = [];
 let gblPath = "";
 let args = [];
+let recursive = false;
+let programVersion = "1.4.0";
 
 // Prompts the user before installing missing packages
 let installPackages = function(packages, installed) {
@@ -86,7 +89,7 @@ let checkDirectory = function(path, cb) {
 					fs.lstatSync(path + "/" + file).isDirectory() &&
                     file != "node_modules"
 				) {
-					if (args[1] == "recursive" || args[1] == "r") {
+					if (recursive) {
 						checkDirectory(path + "/" + file, cb);
 					}
 				}
@@ -162,28 +165,34 @@ let checkFile = function(cb) {
 	});
 };
 
-// Differenciates between install and check
-let exploit = function(func) {
-	if ((args[1] == "recursive" || "r") && args[2]) {
-		gblPath = process.cwd() + "/" + args[2];
-		checkDirectory(process.cwd() + "/" + args[2], func);
-	} else if (args[1]) {
-		gblPath = process.cwd() + "/" + args[1];
-		checkDirectory(process.cwd() + "/" + args[1], func);
-	} else {
-		checkFile(func);
-	}
-};
 
-// Entry point - main function
-(function() {
-	args = process.argv.slice(2);
-
-	if (args[0] == "install" || args[0] == "i") {
-		exploit(installPackages);
-	} else if (args[0] == "check" || args[0] == "c") {
-		exploit(displayPackages);
-	} else {
-		checkFile(installPackages);
-	}
-})();
+program
+	.version(programVersion, "-v, --version")
+	.usage("[options] <file/directory>")
+	.option("-i, --install", "install missing packages in a file or directory")
+	.option("-c, --check", "check missing packages in a file or directory")
+	.option("-r, --recursive", "check or install missing packages in directories recursively")
+	.arguments("<file>")
+	.action((file) => {
+		if (program.install && program.check) {
+			console.log("\033[0;31mStop fooling around please !\033[0m");
+			console.log("Read the doc ! ---> mp -h");
+		}else if (program.install && program.recursive) {
+			gblPath = process.cwd() + "/" + file;
+			recursive = true;
+			checkDirectory(process.cwd() + "/" + file, installPackages);
+		}else if (program.install) {
+			gblPath = process.cwd() + "/" + file;
+			checkDirectory(process.cwd() + "/" + args[1], installPackages);
+		} else if (program.check && program.recursive) {
+			gblPath = process.cwd() + "/" + file;
+			recursive = true;
+			checkDirectory(process.cwd() + "/" + file, displayPackages);
+		}else if (program.check) {
+			gblPath = process.cwd() + "/" + file;
+			checkDirectory(process.cwd() + "/" + file, displayPackages);
+		}else{
+			checkFile(displayPackages);//installPackages);
+		}
+	})
+	.parse(process.argv);
