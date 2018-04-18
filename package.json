@@ -1,6 +1,6 @@
 {
   "name": "missing-packages",
-  "version": "1.4.1",
+  "version": "1.5.0",
   "description": "A simple installer for missing packages in your projects/files",
   "main": "./bin/mp.js",
   "scripts": {
@@ -26,6 +26,7 @@
   "dependencies": {
     "commander": "^2.14.1",
     "inquirer": "^4.0.1",
+    "pkginfo": "^0.4.1",
     "shelljs": "^0.7.8"
   },
   "devDependencies": {

@@ -4,12 +4,12 @@ const fs = require("fs");
 const shell = require("shelljs");
 const inquirer = require("inquirer");
 const program = require("commander");
+require("pkginfo")(module, "version");
 
 let packages = [];
 let gblPath = "";
-let args = [];
 let recursive = false;
-let programVersion = "1.4.1";
+let programVersion = module.exports.version;
 
 // Prompts the user before installing missing packages
 let installPackages = function(packages, installed) {
@@ -70,6 +70,7 @@ let extractPackagesToInstall = function(fileContent) {
 
 // Checks all files in a directory
 let checkDirectory = function(path, cb) {
+
 	try {
 		if (fs.lstatSync(path).isDirectory()) {
 			fs.readdirSync(path).forEach(file => {
@@ -183,7 +184,7 @@ program
 			checkDirectory(process.cwd() + "/" + file, installPackages);
 		}else if (program.install) {
 			gblPath = process.cwd() + "/" + file;
-			checkDirectory(process.cwd() + "/" + args[1], installPackages);
+			checkDirectory(process.cwd() + "/" + file, installPackages);
 		} else if (program.check && program.recursive) {
 			gblPath = process.cwd() + "/" + file;
 			recursive = true;
@@ -192,7 +193,7 @@ program
 			gblPath = process.cwd() + "/" + file;
 			checkDirectory(process.cwd() + "/" + file, displayPackages);
 		}else{
-			checkFile(displayPackages);//installPackages);
+			checkFile(displayPackages);
 		}
 	})
 	.parse(process.argv);
