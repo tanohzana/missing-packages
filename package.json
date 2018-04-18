@@ -1,10 +1,10 @@
 {
   "name": "missing-packages",
-  "version": "1.5.0",
+  "version": "1.5.1",
   "description": "A simple installer for missing packages in your projects/files",
   "main": "./bin/mp.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jasmine",
     "precommit": "eslint bin/mp.js"
   },
   "bin": {
@@ -30,6 +30,7 @@
     "shelljs": "^0.7.8"
   },
   "devDependencies": {
-    "husky": "^0.14.3"
+    "husky": "^0.14.3",
+    "jasmine": "^3.1.0"
   }
 }
