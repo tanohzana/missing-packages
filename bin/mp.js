@@ -7,7 +7,7 @@ let recursive = false;
 let programVersion = module.exports.version;
 
 const displayPackages = require("../src/displayPackages");
-const installPackages = require("../src/install");
+const installPackages = require("../src/installPackages");
 const checkDirectory = require("../src/checkDirectory");
 const checkFile = require("../src/checkFile");
 

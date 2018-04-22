@@ -12,7 +12,7 @@ let extractPackagesToInstall = (fileContent) => {
         console.log("No packages to install");
     }
 
-    return packages2;
+    return packages2 || [];
 };
 
 module.exports = extractPackagesToInstall;

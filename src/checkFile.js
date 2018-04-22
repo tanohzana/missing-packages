@@ -4,8 +4,11 @@ const fs = require("fs");
 const extractPackagesToInstall = require("./utils/extractPackagesToInstall");
 
 // Checks a file before deciding weither to install or display
-let checkFile = function(cb) {
-    fs.readFile(process.cwd() + "/package.json", "utf8", (err, file2) => {
+let checkFile = (cb, ...paramsForTests) => {
+
+    let path = (paramsForTests.length > 0) ? paramsForTests[0] : process.cwd() + "/package.json";
+
+    fs.readFile(path, "utf8", (err, file2) => {
         if (err) {
             console.log(
                 "\nIt seems like the file was not found. Stop messing with me please :-)\n\n",
@@ -16,7 +19,7 @@ let checkFile = function(cb) {
             let main = JSON.parse(file2).main || "";
 
             if (installed && main) {
-                let path = process.cwd() + "/" + main;
+                let path = (paramsForTests.length > 0) ? paramsForTests[1] : process.cwd() + "/" + main;
 
                 fs.readFile(path, "utf8", (err, file) => {
                     if (err) {
@@ -29,6 +32,8 @@ let checkFile = function(cb) {
                         cb(packages, Object.keys(installed));
                     }
                 });
+            } else {
+                console.log("No main file in package.json or installed packages");
             }
         }
     });
