@@ -1,6 +1,6 @@
 {
   "name": "missing-packages",
-  "version": "1.5.2",
+  "version": "1.5.3",
   "description": "A simple installer for missing packages in your projects/files",
   "main": "./bin/mp.js",
   "scripts": {
