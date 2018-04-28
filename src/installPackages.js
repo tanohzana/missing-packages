@@ -1,22 +1,6 @@
-'use strict'
+"use strict";
 
-const inquirer = require("inquirer");
-const shell = require("shelljs");
-
-// Installs a single package
-let installOnePackage = (uniquePackage) => {
-    shell.exec("npm install --save " + uniquePackage);
-};
-
-let installFromQuestions = (toInstallQuestions) => {
-    inquirer.prompt(toInstallQuestions).then(answers => {
-        for (let p in answers) {
-            if (answers[p]) {
-                installOnePackage(p);
-            }
-        }
-    });
-};
+const installFromQuestions = require("./utils/installFromQuestions");
 
 // Prompts the user before installing missing packages
 let installPackages = (packages, installed) => {
