@@ -1,5 +1,6 @@
 # Missing-packages :cloud: :arrow_right: :sunny:
 [![npm version](https://badge.fury.io/js/missing-packages.svg)](https://badge.fury.io/js/missing-packages)
+[![Build Status](https://travis-ci.com/tanohzana/missing-packages.svg?branch=master)](https://travis-ci.com/tanohzana/missing-packages)
 
 ## What is Missing-packages
 Missing-packages (mp) is a tool you will love to use whenever you create a NodeJS package. It is used to check that all packages used in a file or directory are well installed in the 'node_modules' directory. :relieved:
@@ -56,4 +57,4 @@ _This is not perfect but it is getting better by the day_
 
 _Do not hesitate to pull request me_
 
-:relaxed: 
+:relaxed:
