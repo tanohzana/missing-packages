@@ -4,10 +4,11 @@
   "description": "A simple installer for missing packages in your projects/files",
   "main": "./dist/bin/mp.js",
   "scripts": {
-    "test": "yarn build && jasmine",
-    "precommit": "eslint ./src/*.js ./src/utils/*.js ./bin/*.js && yarn test",
+    "test": "jasmine",
+    "precommit": "yarn lint && yarn build && yarn test",
     "build": "rimraf dist/ && babel ./ --out-dir dist/ --ignore ./node_modules,./.babelrc,./package.json,./npm-debug.log --copy-files",
-    "commitmsg": "commitlint -e $GIT_PARAMS"
+    "commitmsg": "commitlint -e $GIT_PARAMS",
+    "lint": "eslint ./src/*.js ./src/utils/*.js ./bin/*.js"
   },
   "bin": {
     "mp": "./dist/bin/mp.js"
