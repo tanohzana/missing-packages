@@ -1,18 +1,17 @@
-'use strict'
-
 // Finds all packages to install in a file
-let extractPackagesToInstall = (fileContent) => {
-    let packages2 = fileContent.match(/require\(["'][A-Za-z0-9_-]+['"]\)/gi);
+const extractPackagesToInstall = (fileContent) => {
+  const packages = fileContent.match(/require\(["'][A-Za-z0-9_-]+['"]\)/giu)
 
-    if (packages2 && packages2.length > 0) {
-        for (let i in packages2) {
-            packages2[i] = packages2[i].substr(9, packages2[i].length - 11);
-        }
-    } else {
-        console.log("No packages to install");
-    }
+  if (!packages) {
+    // eslint-disable-next-line
+    console.log('No packages to install')
 
-    return packages2 || [];
-};
+    return []
+  }
 
-module.exports = extractPackagesToInstall;
+  const mappedPackages = packages.map((pack) => pack.substr(9, pack.length - 11))
+
+  return mappedPackages
+}
+
+export default extractPackagesToInstall

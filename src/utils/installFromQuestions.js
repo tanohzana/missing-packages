@@ -1,21 +1,19 @@
-"use strict";
-
-const inquirer = require("inquirer");
-const shell = require("shelljs");
+import inquirer from 'inquirer'
+import shell from 'shelljs'
 
 // Installs a single package
-let installOnePackage = (uniquePackage) => {
-    shell.exec("npm install --save " + uniquePackage);
-};
+const installOnePackage = (uniquePackage) => {
+  shell.exec(`npm install --save ${uniquePackage}`)
+}
 
-let installFromQuestions = (toInstallQuestions) => {
-    inquirer.prompt(toInstallQuestions).then(answers => {
-        for (let p in answers) {
-            if (answers[p]) {
-                installOnePackage(p);
-            }
-        }
-    });
-};
+const installFromQuestions = (toInstallQuestions) => {
+  inquirer.prompt(toInstallQuestions).then((answers) => {
+    for (let pack in answers) {
+      if (answers[pack]) {
+        installOnePackage(pack)
+      }
+    }
+  })
+}
 
-module.exports = installFromQuestions;
+export default installFromQuestions

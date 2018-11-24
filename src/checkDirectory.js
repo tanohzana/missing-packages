@@ -1,67 +1,63 @@
-"use strict";
+import fs from 'fs'
+import getPackageJson from './utils/getPackageJson'
+import extractPackagesToInstall from './utils/extractPackagesToInstall'
 
-const fs = require("fs");
-const getPackageJson = require("./utils/getPackageJson");
-const extractPackagesToInstall = require("./utils/extractPackagesToInstall");
-
-let packages = [];
-let iterations = 0;
-let gblPath = "";
+let packages = []
+let iterations = 0
+let gblPath = ''
 
 // Checks all files in a directory
-let checkDirectory = (path, recursive, cb) => {
+const checkDirectory = (path, recursive, cb) => {
+  iterations++
 
-    iterations++;
+  if (iterations === 1) {
+    gblPath = path
+  }
 
-    if(iterations === 1) {
-        gblPath = path;
-    }
+  try {
+    if (fs.lstatSync(path).isDirectory()) {
+      fs.readdirSync(path).forEach((file) => {
+        if (file.match(/\.js/gu) && !file.match(/\.json/gu)) {
+          const file2 = fs.readFileSync(`${path}/${file}`, 'utf8')
+          let newPackages = extractPackagesToInstall(file2)
 
-    try {
-        if (fs.lstatSync(path).isDirectory()) {
-            fs.readdirSync(path).forEach(file => {
-                if (file.match(/\.js/g) && !file.match(/\.json/g)) {
-                    let file2 = fs.readFileSync(path + "/" + file, "utf8");
-
-                    let newPackages = extractPackagesToInstall(file2);
-
-                    if (newPackages) {
-                        newPackages.forEach(p => {
-                            if (!packages.includes(p)) {
-                                packages.push(p);
-                            }
-                        });
-                    }
-                } else if (
-                    fs.lstatSync(path + "/" + file).isDirectory() &&
-                    file !== "node_modules"
-                ) {
-                    if (recursive) {
-                        checkDirectory(path + "/" + file, recursive, cb);
-                    }
-                }
-            });
-
-            if (path === gblPath) {
-                getPackageJson("package.json", packages, 0, cb);
-            }
-        } else {
-            fs.readFile(path, "utf8", (err, file) => {
-                if (err) {
-                    console.log(err);
-                } else {
-                    let packages = extractPackagesToInstall(file);
-                    getPackageJson("package.json", packages, 0, cb);
-                }
-            });
+          if (newPackages) {
+            newPackages.forEach((pack) => {
+              if (!packages.includes(pack)) {
+                packages.push(pack)
+              }
+            })
+          }
+        } else if (fs.lstatSync(`${path}/${file}`).isDirectory()
+          && file !== 'node_modules'
+          && recursive) {
+          checkDirectory(`${path}/${file}`, recursive, cb)
         }
-    } catch (e) {
-        if (e.message.substr(0, 6) === "ENOENT") {
-            console.log("No such file or directory");
-        } else {
-            console.log(e);
-        }
-    }
-};
+      })
 
-module.exports = checkDirectory;
+      if (path === gblPath) {
+        getPackageJson('package.json', packages, 0, cb)
+      }
+    } else {
+      fs.readFile(path, 'utf8', (err, file) => {
+        if (err) {
+          // eslint-disable-next-line
+          console.log(err)
+        } else {
+          packages = extractPackagesToInstall(file)
+          getPackageJson('package.json', packages, 0, cb)
+        }
+      })
+    }
+  } catch (err) {
+    if (err.message.substr(0, 6) === 'ENOENT') {
+      // eslint-disable-next-line
+      console.log('No such file or directory')
+    } else {
+      // eslint-disable-next-line
+      console.log(err)
+    }
+  }
+}
+
+export default checkDirectory

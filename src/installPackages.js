@@ -1,23 +1,20 @@
-"use strict";
-
-const installFromQuestions = require("./utils/installFromQuestions");
+import installFromQuestions from './utils/installFromQuestions'
 
 // Prompts the user before installing missing packages
-let installPackages = (packages, installed) => {
-    let toInstallQuestions = [];
+const installPackages = (packages, installed) => {
+  const toInstallQuestions = packages
+  .filter((pack) => !installed.includes(pack))
+  // eslint-disable-next-line
+  .map((pack) => {
+    return {
+      default: false,
+      message: `Install package \x1b[32m${pack}\x1b[0m ?`,
+      name: pack,
+      type: 'confirm',
+    }
+  })
 
-    packages.forEach(p => {
-        if (!installed.includes(p)) {
-            toInstallQuestions.push({
-                type: "confirm",
-                name: p,
-                message: "Install package \x1b[32m" + p + "\x1b[0m ?",
-                default: false
-            });
-        }
-    });
+  installFromQuestions(toInstallQuestions)
+}
 
-    installFromQuestions(toInstallQuestions);
-};
-
-module.exports = installPackages;
+export default installPackages

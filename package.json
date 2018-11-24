@@ -1,15 +1,16 @@
 {
   "name": "missing-packages",
-  "version": "1.5.3",
+  "version": "1.6.0",
   "description": "A simple installer for missing packages in your projects/files",
-  "main": "./bin/mp.js",
+  "main": "./dist/bin/mp.js",
   "scripts": {
-    "test": "jasmine",
-    "precommit": "eslint bin/mp.js && npm test",
+    "test": "yarn build && jasmine",
+    "precommit": "eslint ./src/*.js ./src/utils/*.js ./bin/*.js && yarn test",
+    "build": "rimraf dist/ && babel ./ --out-dir dist/ --ignore ./node_modules,./.babelrc,./package.json,./npm-debug.log --copy-files",
     "commitmsg": "commitlint -e $GIT_PARAMS"
   },
   "bin": {
-    "mp": "./bin/mp.js"
+    "mp": "./dist/bin/mp.js"
   },
   "keywords": [
     "missing",
@@ -33,7 +34,12 @@
   "devDependencies": {
     "@commitlint/cli": "^7.0.0",
     "@commitlint/config-conventional": "^7.0.1",
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.3",
+    "babel-preset-es2015": "^6.24.1",
+    "eslint": "^5.9.0",
     "husky": "^0.14.3",
-    "jasmine": "^3.1.0"
+    "jasmine": "^3.1.0",
+    "rimraf": "^2.6.2"
   }
 }
