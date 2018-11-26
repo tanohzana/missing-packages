@@ -36,7 +36,7 @@ const checkDirectory = (path, recursive, cb) => {
       })
 
       if (path === gblPath) {
-        getPackageJson('package.json', packages, 0, cb)
+        getPackageJson(packages, cb)
       }
     } else {
       fs.readFile(path, 'utf8', (err, file) => {
@@ -45,7 +45,7 @@ const checkDirectory = (path, recursive, cb) => {
           console.log(err)
         } else {
           packages = extractPackagesToInstall(file)
-          getPackageJson('package.json', packages, 0, cb)
+          getPackageJson(packages, cb)
         }
       })
     }

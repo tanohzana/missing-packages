@@ -34,8 +34,6 @@ program
       recursive = true
       checkDirectory(`${process.cwd()}/${file}`, recursive, displayPackages)
     } else if (program.check) {
-      checkDirectory(`${process.cwd()}/${file}`, recursive, displayPackages)
-    } else {
       checkFile(displayPackages)
     }
   })

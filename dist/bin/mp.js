@@ -46,8 +46,6 @@ _commander2.default.version(programVersion, '-v, --version').usage('[options] <f
     recursive = true;
     (0, _checkDirectory2.default)(process.cwd() + '/' + file, recursive, _displayPackages2.default);
   } else if (_commander2.default.check) {
-    (0, _checkDirectory2.default)(process.cwd() + '/' + file, recursive, _displayPackages2.default);
-  } else {
     (0, _checkFile2.default)(_displayPackages2.default);
   }
 }).parse(process.argv);

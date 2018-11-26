@@ -50,7 +50,7 @@ var checkDirectory = function checkDirectory(path, recursive, cb) {
       });
 
       if (path === gblPath) {
-        (0, _getPackageJson2.default)('package.json', packages, 0, cb);
+        (0, _getPackageJson2.default)(packages, cb);
       }
     } else {
       _fs2.default.readFile(path, 'utf8', function (err, file) {
@@ -59,7 +59,7 @@ var checkDirectory = function checkDirectory(path, recursive, cb) {
           console.log(err);
         } else {
           packages = (0, _extractPackagesToInstall2.default)(file);
-          (0, _getPackageJson2.default)('package.json', packages, 0, cb);
+          (0, _getPackageJson2.default)(packages, cb);
         }
       });
     }
