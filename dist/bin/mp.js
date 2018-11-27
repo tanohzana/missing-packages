@@ -45,22 +45,25 @@ _commander2.default.version(programVersion, '-v, --version').usage('[options] <f
     console.log('\\033[0;31mStop fooling around please !\\033[0m');
     // eslint-disable-next-line
     console.log('Read the doc ! ---> mp -h');
-  } else if (_commander2.default.install) {
+  } else if (_commander2.default.install && isDir) {
     var packagesToInstall = (0, _checkDirectory2.default)(filePath);
     var packagesInstalled = (0, _getPackageJson.getPackagesInstalled)();
 
     (0, _installPackages2.default)(packagesToInstall, packagesInstalled);
-  } else if (isDir) {
-    var _packagesToInstall = (0, _checkDirectory2.default)(filePath);
+  } else if (_commander2.default.install) {
+    var _packagesToInstall = (0, _checkFile2.default)(filePath);
     var _packagesInstalled = (0, _getPackageJson.getPackagesInstalled)();
 
-    (0, _displayPackages2.default)(_packagesToInstall, _packagesInstalled);
-  } else {
-    var _packagesToInstall2 = (0, _checkFile2.default)(filePath);
+    (0, _installPackages2.default)(_packagesToInstall, _packagesInstalled);
+  } else if (isDir) {
+    var _packagesToInstall2 = (0, _checkDirectory2.default)(filePath);
     var _packagesInstalled2 = (0, _getPackageJson.getPackagesInstalled)();
 
     (0, _displayPackages2.default)(_packagesToInstall2, _packagesInstalled2);
+  } else {
+    var _packagesToInstall3 = (0, _checkFile2.default)(filePath);
+    var _packagesInstalled3 = (0, _getPackageJson.getPackagesInstalled)();
+
+    (0, _displayPackages2.default)(_packagesToInstall3, _packagesInstalled3);
   }
 }).parse(process.argv);
-
-// @TODO: make checkFile work again

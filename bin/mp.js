@@ -28,8 +28,13 @@ program
       console.log('\\033[0;31mStop fooling around please !\\033[0m')
       // eslint-disable-next-line
       console.log('Read the doc ! ---> mp -h')
-    } else if (program.install) {
+    } else if (program.install && isDir) {
       const packagesToInstall = checkDirectory(filePath)
+      const packagesInstalled = getPackagesInstalled()
+
+      installPackages(packagesToInstall, packagesInstalled)
+    } else if (program.install) {
+      const packagesToInstall = checkFile(filePath)
       const packagesInstalled = getPackagesInstalled()
 
       installPackages(packagesToInstall, packagesInstalled)
