@@ -4,7 +4,6 @@ import program from 'commander'
 import PkgInfo from 'pkginfo'
 
 new PkgInfo(module, 'version')
-let recursive = false
 let programVersion = module.exports.version
 
 import displayPackages from '../src/displayPackages'
@@ -17,24 +16,28 @@ program
   .usage('[options] <file/directory>')
   .option('-i, --install', 'install missing packages in a file or directory')
   .option('-c, --check', 'check missing packages in a file or directory')
-  .option('-r, --recursive', 'check or install missing packages in directories recursively')
   .arguments('<file>')
   .action((file) => {
+    const filePath = file ? `${process.cwd()}/${file}` : null
+
     if (program.install && program.check) {
       // eslint-disable-next-line
       console.log('\\033[0;31mStop fooling around please !\\033[0m')
       // eslint-disable-next-line
       console.log('Read the doc ! ---> mp -h')
-    } else if (program.install && program.recursive) {
-      recursive = true
-      checkDirectory(`${process.cwd()}/${file}`, recursive, installPackages)
     } else if (program.install) {
-      checkDirectory(`${process.cwd()}/${file}`, recursive, installPackages)
-    } else if (program.check && program.recursive) {
-      recursive = true
-      checkDirectory(`${process.cwd()}/${file}`, recursive, displayPackages)
+      const { packages, installed } = checkDirectory(filePath)
+      installPackages(packages, installed)
     } else if (program.check) {
-      checkFile(displayPackages)
+      const { packages, installed } = checkDirectory(filePath)
+      displayPackages(packages, installed)
+    } else {
+      const { packages, installed } = checkFile(filePath)
+      displayPackages(packages, installed)
     }
   })
   .parse(process.argv)
+
+  // @TODO: receive arrays, not objects
+  // @TODO: exploit packagesJson here, top-level
+  // @TODO: make checkFile work again

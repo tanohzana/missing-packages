@@ -15,9 +15,9 @@ var _extractPackagesToInstall2 = _interopRequireDefault(_extractPackagesToInstal
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 // Checks a file before deciding weither to install or display
-var checkFile = function checkFile(cb) {
-  for (var _len = arguments.length, paramsForTests = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-    paramsForTests[_key - 1] = arguments[_key];
+var checkFile = function checkFile() {
+  for (var _len = arguments.length, paramsForTests = Array(_len), _key = 0; _key < _len; _key++) {
+    paramsForTests[_key] = arguments[_key];
   }
 
   var path = paramsForTests.length > 0 ? paramsForTests[0] : process.cwd() + '/package.json';
@@ -39,7 +39,7 @@ var checkFile = function checkFile(cb) {
             console.log('\nIt seems like the file was not found. Stop messing with me please :-)\n\n', err);
           } else {
             var packages = (0, _extractPackagesToInstall2.default)(file);
-            cb(packages, Object.keys(installed));
+            return { packages: packages, installed: Object.keys(installed) };
           }
         });
       } else {

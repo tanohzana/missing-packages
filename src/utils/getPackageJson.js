@@ -1,32 +1,40 @@
 import fs from 'fs'
 
-const getPackageJsonRecursive = (packagePath, packages, cpt, cb) => {
-  fs.readFile(`${process.cwd()}/${packagePath}`, 'utf8', (err, file2) => {
-    if (err) {
-      cpt++
-      if (cpt < 5) {
-        return getPackageJsonRecursive(`../${packagePath}`, packages, cpt, cb)
-      }
-
-      return null
+const getPackageJsonRecursive = (packagePath, cpt) => {
+  try {
+    const file = fs.readFileSync(`${process.cwd()}/${packagePath}`, 'utf8')
+    return file
+  } catch(e) {
+    cpt++
+    if (cpt < 5) {
+      return getPackageJsonRecursive(`../${packagePath}`, cpt)
     }
 
-    return file2
-  })
+    return null
+  }
 }
 
 // Does everything it can to find a package.json, even in parent dirs
-const getPackageJson = (packages, cb) => {
+const getPackageJson = () => {
   let cpt = 0
-  const packageJson = getPackageJsonRecursive('package.json', packages, cpt, cb)
+  const packageJson = getPackageJsonRecursive('package.json', cpt)
 
-  if (packageJson) {
-    const installed = JSON.parse(packageJson).dependencies || { }
-    cb(packages, Object.keys(installed))
-  } else {
-    // eslint-disable-next-line
-    console.log('No package.json')
+  return packageJson
+}
+
+// @TODO export this
+
+const getPackagesInstalled = () => {
+  const packageJson = getPackageJson()
+
+  if (!packageJson) {
+    throw new Error('No package.json found')
   }
+
+  const installedPackagesObject = JSON.parse(packageJson).dependencies || { }
+  const installedPackagesArray = Object.keys(installedPackagesObject)
+
+  return installedPackagesArray
 }
 
 export default getPackageJson

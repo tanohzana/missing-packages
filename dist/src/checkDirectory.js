@@ -18,60 +18,45 @@ var _extractPackagesToInstall2 = _interopRequireDefault(_extractPackagesToInstal
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var packages = [];
-var iterations = 0;
-var gblPath = '';
+var checkDirectoryRecusrsive = function checkDirectoryRecusrsive(path, packages) {
+  _fs2.default.readdirSync(path).forEach(function (file) {
+    console.log(file);
+    if (file.match(/\.js/g) && !file.match(/\.json/g)) {
+      var file2 = _fs2.default.readFileSync(path + '/' + file, 'utf8');
+      var newPackages = (0, _extractPackagesToInstall2.default)(file2);
+
+      if (newPackages) {
+        newPackages.forEach(function (pack) {
+          if (!packages.includes(pack)) {
+            packages.push(pack);
+          }
+        });
+      }
+
+      return packages;
+    } else if (_fs2.default.lstatSync(path + '/' + file).isDirectory() && file !== 'node_modules') {
+      return checkDirectoryRecusrsive(path + '/' + file);
+    }
+  });
+};
 
 // Checks all files in a directory
-var checkDirectory = function checkDirectory(path, recursive, cb) {
-  iterations++;
+var checkDirectory = function checkDirectory(path) {
+  var packagesFound = [];
+  var packageJson = (0, _getPackageJson2.default)();
 
-  if (iterations === 1) {
-    gblPath = path;
+  if (!packageJson) {
+    throw new Error('No package.json found');
   }
 
-  try {
-    if (_fs2.default.lstatSync(path).isDirectory()) {
-      _fs2.default.readdirSync(path).forEach(function (file) {
-        if (file.match(/\.js/g) && !file.match(/\.json/g)) {
-          var file2 = _fs2.default.readFileSync(path + '/' + file, 'utf8');
-          var newPackages = (0, _extractPackagesToInstall2.default)(file2);
+  var installedPackagesObject = JSON.parse(packageJson).dependencies || {};
+  var installedPackagesArray = Object.keys(installedPackagesObject);
 
-          if (newPackages) {
-            newPackages.forEach(function (pack) {
-              if (!packages.includes(pack)) {
-                packages.push(pack);
-              }
-            });
-          }
-        } else if (_fs2.default.lstatSync(path + '/' + file).isDirectory() && file !== 'node_modules' && recursive) {
-          checkDirectory(path + '/' + file, recursive, cb);
-        }
-      });
-
-      if (path === gblPath) {
-        (0, _getPackageJson2.default)(packages, cb);
-      }
-    } else {
-      _fs2.default.readFile(path, 'utf8', function (err, file) {
-        if (err) {
-          // eslint-disable-next-line
-          console.log(err);
-        } else {
-          packages = (0, _extractPackagesToInstall2.default)(file);
-          (0, _getPackageJson2.default)(packages, cb);
-        }
-      });
-    }
-  } catch (err) {
-    if (err.message.substr(0, 6) === 'ENOENT') {
-      // eslint-disable-next-line
-      console.log('No such file or directory');
-    } else {
-      // eslint-disable-next-line
-      console.log(err);
-    }
+  if (_fs2.default.lstatSync(path).isDirectory()) {
+    packagesFound = checkDirectoryRecusrsive(path, packagesFound);
   }
+
+  return { packages: packagesFound, installed: installedPackagesArray };
 };
 
 exports.default = checkDirectory;

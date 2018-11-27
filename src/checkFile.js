@@ -2,7 +2,7 @@ import fs from 'fs'
 import extractPackagesToInstall from './utils/extractPackagesToInstall'
 
 // Checks a file before deciding weither to install or display
-const checkFile = (cb, ...paramsForTests) => {
+const checkFile = () => {
   let path = (paramsForTests.length > 0) ? paramsForTests[0] : `${process.cwd()}/package.json`
 
   fs.readFile(path, 'utf8', (err, file2) => {
@@ -28,7 +28,7 @@ const checkFile = (cb, ...paramsForTests) => {
             )
           } else {
             const packages = extractPackagesToInstall(file)
-            cb(packages, Object.keys(installed))
+            return { packages, installed: Object.keys(installed) }
           }
         })
       } else {

@@ -10,33 +10,26 @@ var _fs2 = _interopRequireDefault(_fs);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var getPackageJsonRecursive = function getPackageJsonRecursive(packagePath, packages, cpt, cb) {
-  _fs2.default.readFile(process.cwd() + '/' + packagePath, 'utf8', function (err, file2) {
-    if (err) {
-      cpt++;
-      if (cpt < 5) {
-        return getPackageJsonRecursive('../' + packagePath, packages, cpt, cb);
-      }
-
-      return null;
+var getPackageJsonRecursive = function getPackageJsonRecursive(packagePath, cpt) {
+  try {
+    var file = _fs2.default.readFileSync(process.cwd() + '/' + packagePath, 'utf8');
+    return file;
+  } catch (e) {
+    cpt++;
+    if (cpt < 5) {
+      return getPackageJsonRecursive('../' + packagePath, cpt);
     }
 
-    return file2;
-  });
+    return null;
+  }
 };
 
 // Does everything it can to find a package.json, even in parent dirs
-var getPackageJson = function getPackageJson(packages, cb) {
+var getPackageJson = function getPackageJson() {
   var cpt = 0;
-  var packageJson = getPackageJsonRecursive('package.json', packages, cpt, cb);
+  var packageJson = getPackageJsonRecursive('package.json', cpt);
 
-  if (packageJson) {
-    var installed = JSON.parse(packageJson).dependencies || {};
-    cb(packages, Object.keys(installed));
-  } else {
-    // eslint-disable-next-line
-    console.log('No package.json');
-  }
+  return packageJson;
 };
 
 exports.default = getPackageJson;
