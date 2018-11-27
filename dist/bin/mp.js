@@ -50,7 +50,7 @@ _commander2.default.version(programVersion, '-v, --version').usage('[options] <f
     var packagesInstalled = (0, _getPackageJson.getPackagesInstalled)();
 
     (0, _installPackages2.default)(packagesToInstall, packagesInstalled);
-  } else if (_commander2.default.check && isDir) {
+  } else if (isDir) {
     var _packagesToInstall = (0, _checkDirectory2.default)(filePath);
     var _packagesInstalled = (0, _getPackageJson.getPackagesInstalled)();
 

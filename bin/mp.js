@@ -33,7 +33,7 @@ program
       const packagesInstalled = getPackagesInstalled()
 
       installPackages(packagesToInstall, packagesInstalled)
-    } else if (program.check && isDir) {
+    } else if (isDir) {
       const packagesToInstall = checkDirectory(filePath)
       const packagesInstalled = getPackagesInstalled()
 
@@ -46,5 +46,3 @@ program
     }
   })
   .parse(process.argv)
-
-  // @TODO: make checkFile work again
