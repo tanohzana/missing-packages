@@ -28,14 +28,14 @@ var checkDirectoryRecusrsive = function checkDirectoryRecusrsive(path, packages)
           }
         });
       }
-
-      return packages;
     } else if (_fs2.default.lstatSync(filePath).isDirectory() && file !== 'node_modules') {
       return checkDirectoryRecusrsive(path + '/' + file, packages);
     }
 
     return [];
   });
+
+  return packages;
 };
 
 // Checks all files in a directory

@@ -16,8 +16,6 @@ const checkDirectoryRecusrsive = (path, packages) => {
           }
         })
       }
-
-      return packages
     } else if (fs.lstatSync(filePath).isDirectory()
       && file !== 'node_modules') {
       return checkDirectoryRecusrsive(`${path}/${file}`, packages)
@@ -25,6 +23,8 @@ const checkDirectoryRecusrsive = (path, packages) => {
 
     return []
   })
+
+  return packages
 }
 
 // Checks all files in a directory
