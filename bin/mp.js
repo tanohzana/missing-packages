@@ -2,6 +2,7 @@
 
 import program from 'commander'
 import PkgInfo from 'pkginfo'
+import fs from 'fs'
 
 new PkgInfo(module, 'version')
 let programVersion = module.exports.version
@@ -10,6 +11,7 @@ import displayPackages from '../src/displayPackages'
 import installPackages from '../src/installPackages'
 import checkDirectory from '../src/checkDirectory'
 import checkFile from '../src/checkFile'
+import { getPackagesInstalled, } from '../src/utils/getPackageJson'
 
 program
   .version(programVersion, '-v, --version')
@@ -19,6 +21,7 @@ program
   .arguments('<file>')
   .action((file) => {
     const filePath = file ? `${process.cwd()}/${file}` : null
+    const isDir = fs.lstatSync(filePath).isDirectory()
 
     if (program.install && program.check) {
       // eslint-disable-next-line
@@ -26,18 +29,22 @@ program
       // eslint-disable-next-line
       console.log('Read the doc ! ---> mp -h')
     } else if (program.install) {
-      const { packages, installed } = checkDirectory(filePath)
-      installPackages(packages, installed)
-    } else if (program.check) {
-      const { packages, installed } = checkDirectory(filePath)
-      displayPackages(packages, installed)
+      const packagesToInstall = checkDirectory(filePath)
+      const packagesInstalled = getPackagesInstalled()
+
+      installPackages(packagesToInstall, packagesInstalled)
+    } else if (program.check && isDir) {
+      const packagesToInstall = checkDirectory(filePath)
+      const packagesInstalled = getPackagesInstalled()
+
+      displayPackages(packagesToInstall, packagesInstalled)
     } else {
-      const { packages, installed } = checkFile(filePath)
-      displayPackages(packages, installed)
+      const packagesToInstall = checkFile(filePath)
+      const packagesInstalled = getPackagesInstalled()
+
+      displayPackages(packagesToInstall, packagesInstalled)
     }
   })
   .parse(process.argv)
 
-  // @TODO: receive arrays, not objects
-  // @TODO: exploit packagesJson here, top-level
   // @TODO: make checkFile work again

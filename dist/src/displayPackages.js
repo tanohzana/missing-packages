@@ -5,9 +5,8 @@ Object.defineProperty(exports, "__esModule", {
 });
 // Displays packages given in parameters
 var displayPackages = function displayPackages(packagesToShow, installed) {
-  console.log(packagesToShow);
   var display = packagesToShow.filter(function (pack) {
-    console.log(pack);return !installed.includes(pack);
+    return !installed.includes(pack);
   });
 
   // eslint-disable-next-line

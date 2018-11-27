@@ -3,8 +3,9 @@ import fs from 'fs'
 const getPackageJsonRecursive = (packagePath, cpt) => {
   try {
     const file = fs.readFileSync(`${process.cwd()}/${packagePath}`, 'utf8')
+
     return file
-  } catch(e) {
+  } catch (err) {
     cpt++
     if (cpt < 5) {
       return getPackageJsonRecursive(`../${packagePath}`, cpt)
@@ -22,9 +23,7 @@ const getPackageJson = () => {
   return packageJson
 }
 
-// @TODO export this
-
-const getPackagesInstalled = () => {
+export const getPackagesInstalled = () => {
   const packageJson = getPackageJson()
 
   if (!packageJson) {

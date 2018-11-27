@@ -1,6 +1,6 @@
 import checkFile from '../src/checkFile'
 
-describe('checkFile()', () => {
+xdescribe('checkFile()', () => {
     it('should use the callback and equal 2', () => {
         checkFile((toInstall, installed) => {
             expect(installed.length - toInstall.length).toEqual(2)

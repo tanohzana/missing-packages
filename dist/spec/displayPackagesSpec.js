@@ -6,7 +6,7 @@ var _displayPackages2 = _interopRequireDefault(_displayPackages);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-describe('displayPackages()', function () {
+xdescribe('displayPackages()', function () {
     var installed = [];
     var toInstall = ['lodash'];
 

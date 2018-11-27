@@ -1,12 +1,13 @@
 import fs from 'fs'
-import getPackageJson from './utils/getPackageJson'
-import extractPackagesToInstall from './utils/extractPackagesToInstall'
+
+import checkFile from './checkFile'
 
 const checkDirectoryRecusrsive = (path, packages) => {
   fs.readdirSync(path).forEach((file) => {
+    const filePath = `${path}/${file}`
+
     if (file.match(/\.js/gu) && !file.match(/\.json/gu)) {
-      const file2 = fs.readFileSync(`${path}/${file}`, 'utf8')
-      let newPackages = extractPackagesToInstall(file2)
+      let newPackages = checkFile(filePath)
 
       if (newPackages) {
         newPackages.forEach((pack) => {
@@ -17,20 +18,19 @@ const checkDirectoryRecusrsive = (path, packages) => {
       }
 
       return packages
-    } else if (fs.lstatSync(`${path}/${file}`).isDirectory()
+    } else if (fs.lstatSync(filePath).isDirectory()
       && file !== 'node_modules') {
-      return checkDirectoryRecusrsive(`${path}/${file}`)
+      return checkDirectoryRecusrsive(`${path}/${file}`, packages)
     }
+
+    return []
   })
 }
 
 // Checks all files in a directory
 const checkDirectory = (path) => {
-  let packagesFound = []
-
-  if (fs.lstatSync(path).isDirectory()) {
-    packagesFound = checkDirectoryRecusrsive(path, packagesFound)
-  }
+  // Passing an empty array to initiate recursivity
+  const packagesFound = checkDirectoryRecusrsive(path, [])
 
   return packagesFound
 }

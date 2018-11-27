@@ -3,6 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.getPackagesInstalled = undefined;
 
 var _fs = require('fs');
 
@@ -13,8 +14,9 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var getPackageJsonRecursive = function getPackageJsonRecursive(packagePath, cpt) {
   try {
     var file = _fs2.default.readFileSync(process.cwd() + '/' + packagePath, 'utf8');
+
     return file;
-  } catch (e) {
+  } catch (err) {
     cpt++;
     if (cpt < 5) {
       return getPackageJsonRecursive('../' + packagePath, cpt);
@@ -30,6 +32,19 @@ var getPackageJson = function getPackageJson() {
   var packageJson = getPackageJsonRecursive('package.json', cpt);
 
   return packageJson;
+};
+
+var getPackagesInstalled = exports.getPackagesInstalled = function getPackagesInstalled() {
+  var packageJson = getPackageJson();
+
+  if (!packageJson) {
+    throw new Error('No package.json found');
+  }
+
+  var installedPackagesObject = JSON.parse(packageJson).dependencies || {};
+  var installedPackagesArray = Object.keys(installedPackagesObject);
+
+  return installedPackagesArray;
 };
 
 exports.default = getPackageJson;

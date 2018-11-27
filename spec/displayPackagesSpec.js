@@ -1,6 +1,6 @@
 import displayPackages from '../src/displayPackages'
 
-describe('displayPackages()', () => {
+xdescribe('displayPackages()', () => {
     const installed = []
     const toInstall = ['lodash']
 
