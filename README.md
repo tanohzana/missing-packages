@@ -9,7 +9,7 @@ Missing-packages (mp) is a tool you will love to use whenever you create a NodeJ
 
 1. Open your computer's terminal
 2. Install [NodeJS](http://nodejs.org) if you haven't already
-3. Install the package globally using: `npm i -g missing-packages`
+3. Install the package globally using: `npm i -g missing-packages` or `npx missing-packages [whatever]`
 
 ## API
 
@@ -32,16 +32,6 @@ Go to your project's directory and type:
 or
 
 `mp --install [path]`
-
-#### Using recursivity
-
-If you are trying to install all packages present in a directory and the directories inside it, you might want to use recursivity like that:
-
-`mp --install --recursive examples`
-
-or
-
-`mp -ir examples`
 
 ## Examples
 
