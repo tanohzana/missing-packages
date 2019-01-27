@@ -29,6 +29,8 @@
     "bluebird": "^3.5.3",
     "commander": "^2.14.1",
     "inquirer": "^4.0.1",
+    "lodash.uniq": "^4.5.0",
+    "npmlog": "^4.1.2",
     "pkginfo": "^0.4.1",
     "read": "^1.0.7",
     "shelljs": "^0.7.8"

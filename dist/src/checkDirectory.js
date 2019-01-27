@@ -36,4 +36,4 @@ function checkDirectoryRecursive(path, knownPackages) {
   return (0, _lodash2.default)(knownPackages);
 }
 
-exports.default = checkDirectory;
+exports.default = checkDirectoryRecursive;

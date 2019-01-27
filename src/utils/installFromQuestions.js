@@ -1,15 +1,9 @@
 import inquirer from 'inquirer'
-import shell from 'shelljs'
 import Bluebird from "bluebird"
-import Read from "read"
+import readModule from "read"
 import log from "npmlog"
 
-const readAsync = Bluebird.promisify(new Read())
-
-// Installs packages
-const installPackagesString = (packagesString) => {
-  shell.exec(`npm install --save ${packagesString}`)
-}
+const readAsync = Bluebird.promisify(readModule)
 
 const installFromQuestions = (toInstallQuestions, cpt, cb) => {
   readAnswer(toInstallQuestions[cpt].message, toInstallQuestions[cpt].answer).then((answer) => {

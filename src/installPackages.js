@@ -1,3 +1,5 @@
+import shell from 'shelljs'
+
 import installFromQuestions from './utils/installFromQuestions'
 
 // Prompts the user before installing missing packages
@@ -21,6 +23,13 @@ const installPackages = (packages, installed) => {
 
     installPackagesString(mappedPackages.join(" "))
   })
+}
+
+// Installs packages
+const installPackagesString = (packagesString) => {
+  if (packagesString.length) {
+    shell.exec(`npm install --save ${packagesString}`)
+  }
 }
 
 export default installPackages

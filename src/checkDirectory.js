@@ -22,4 +22,4 @@ function checkDirectoryRecursive(path, knownPackages) {
   return uniq(knownPackages)
 }
 
-export default checkDirectory
+export default checkDirectoryRecursive

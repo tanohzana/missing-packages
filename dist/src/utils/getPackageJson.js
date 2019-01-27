@@ -3,6 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.getPackagesInstalled = undefined;
 
 var _fs = require("fs");
 
@@ -49,4 +50,5 @@ var getPackagesInstalled = function getPackagesInstalled() {
   return installedPackagesArray;
 };
 
+exports.getPackagesInstalled = getPackagesInstalled;
 exports.default = getPackageJson;

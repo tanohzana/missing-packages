@@ -39,4 +39,5 @@ const getPackagesInstalled = () => {
   return installedPackagesArray
 }
 
+export { getPackagesInstalled }
 export default getPackageJson

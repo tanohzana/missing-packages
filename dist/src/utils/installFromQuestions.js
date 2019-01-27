@@ -1,37 +1,28 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _inquirer = require('inquirer');
+var _inquirer = require("inquirer");
 
 var _inquirer2 = _interopRequireDefault(_inquirer);
 
-var _shelljs = require('shelljs');
-
-var _shelljs2 = _interopRequireDefault(_shelljs);
-
-var _bluebird = require('bluebird');
+var _bluebird = require("bluebird");
 
 var _bluebird2 = _interopRequireDefault(_bluebird);
 
-var _read = require('read');
+var _read = require("read");
 
 var _read2 = _interopRequireDefault(_read);
 
-var _npmlog = require('npmlog');
+var _npmlog = require("npmlog");
 
 var _npmlog2 = _interopRequireDefault(_npmlog);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var readAsync = _bluebird2.default.promisify(_read2.default);
-
-// Installs packages
-var installPackagesString = function installPackagesString(packagesString) {
-  _shelljs2.default.exec('npm install --save ' + packagesString);
-};
 
 var installFromQuestions = function installFromQuestions(toInstallQuestions, cpt, cb) {
   readAnswer(toInstallQuestions[cpt].message, toInstallQuestions[cpt].answer).then(function (answer) {
@@ -60,7 +51,7 @@ var readAnswer = function readAnswer(msg, answer, opts, isRetry) {
     return Promise.resolve(answer.trim());
   }
 
-  return read({ prompt: msg, default: answer ? 'Entered: ' + answer : '' }).then(function (answer) {
+  return read({ prompt: msg, default: answer ? "Entered: " + answer : '' }).then(function (answer) {
     return readAnswer(msg, answer, opts, true);
   });
 };

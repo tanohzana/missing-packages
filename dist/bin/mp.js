@@ -21,7 +21,7 @@ var _getPackageJson = require('../src/utils/getPackageJson');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var mp = function mp(args, cb) {
+var mp = function mp(args) {
   var firstParam = args.shift();
   var secondParam = args.shift();
   var packagesInstalled = (0, _getPackageJson.getPackagesInstalled)();
@@ -49,3 +49,6 @@ var mp = function mp(args, cb) {
 var misuse = function misuse() {
   console.log('Usage: \n' + mp.usage);
 };
+
+var args = process.argv.splice(2);
+mp(args);

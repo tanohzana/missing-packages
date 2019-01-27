@@ -7,7 +7,7 @@ import installPackages from '../src/installPackages'
 import check from "../src/check"
 import { getPackagesInstalled } from '../src/utils/getPackageJson'
 
-const mp = (args, cb) => {
+const mp = (args) => {
   const firstParam = args.shift()
   const secondParam = args.shift()
   const packagesInstalled = getPackagesInstalled()
@@ -35,3 +35,6 @@ const mp = (args, cb) => {
 const misuse = () => {
   console.log(`Usage: \n${mp.usage}`);
 }
+
+const args = process.argv.splice(2)
+mp(args)
