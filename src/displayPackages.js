@@ -1,10 +1,12 @@
-// Displays packages given in parameters
+// Compare packages given in parameters and shows those to install
 const displayPackages = (packagesToShow, installed) => {
   const display = packagesToShow
     .filter((pack) => !installed.includes(pack))
 
-  // eslint-disable-next-line
-  console.log('Packages to install: ', display)
+  const message = display.length ?
+    ` ⚡️ Package(s) to install: ${display.toString()}` : " ❌ No package to install"
+
+  console.log(message)
 }
 
 export default displayPackages

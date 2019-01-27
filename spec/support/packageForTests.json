@@ -1,7 +1,0 @@
-{
-  "main": "mainForTests.js",
-  "dependencies": {
-    "pkginfo": "^0.4.1",
-    "shelljs": "^0.7.8"
-  }
-}

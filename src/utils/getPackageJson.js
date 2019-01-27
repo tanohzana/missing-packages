@@ -1,12 +1,14 @@
 import fs from 'fs'
 
+// Find package.json through the deps tree
 const getPackageJsonRecursive = (packagePath, cpt) => {
   try {
-    const file = fs.readFileSync(`${process.cwd()}/${packagePath}`, 'utf8')
+    const file = fs.readFileSync(`${process.cwd()}/${packagePath}`, "utf8")
 
     return file
   } catch (err) {
     cpt++
+    // Loop recursively only 5 times then abort
     if (cpt < 5) {
       return getPackageJsonRecursive(`../${packagePath}`, cpt)
     }
@@ -15,22 +17,23 @@ const getPackageJsonRecursive = (packagePath, cpt) => {
   }
 }
 
-// Does everything it can to find a package.json, even in parent dirs
+// Tries to find a package.json
 const getPackageJson = () => {
   let cpt = 0
-  const packageJson = getPackageJsonRecursive('package.json', cpt)
+  const packageJson = getPackageJsonRecursive("package.json", cpt)
 
   return packageJson
 }
 
-export const getPackagesInstalled = () => {
+// Get packages installed, from package.json
+const getPackagesInstalled = () => {
   const packageJson = getPackageJson()
 
   if (!packageJson) {
-    throw new Error('No package.json found')
+    throw new Error(" ❌ No package.json found")
   }
 
-  const installedPackagesObject = JSON.parse(packageJson).dependencies || { }
+  const installedPackagesObject = JSON.parse(packageJson).dependencies || {}
   const installedPackagesArray = Object.keys(installedPackagesObject)
 
   return installedPackagesArray
