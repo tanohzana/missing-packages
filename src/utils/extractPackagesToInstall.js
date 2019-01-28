@@ -7,7 +7,7 @@ const extractPackagesToInstall = (fileContent) => {
     return []
   }
 
-  // removes "require(" and ")"
+  // Removes "require(" and ")"
   const mappedPackages = packages.map((pack) => pack.substr(9, pack.length - 11))
 
   return mappedPackages

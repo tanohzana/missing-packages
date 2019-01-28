@@ -12,7 +12,7 @@ var extractPackagesToInstall = function extractPackagesToInstall(fileContent) {
     return [];
   }
 
-  // removes "require(" and ")"
+  // Removes "require(" and ")"
   var mappedPackages = packages.map(function (pack) {
     return pack.substr(9, pack.length - 11);
   });

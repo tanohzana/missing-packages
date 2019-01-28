@@ -11,6 +11,7 @@ var displayPackages = function displayPackages(packagesToShow, installed) {
 
   var message = display.length ? " \u26A1\uFE0F Package(s) to install: " + display.toString() : " ❌ No package to install";
 
+  // eslint-disable-next-line no-console
   console.log(message);
 };
 

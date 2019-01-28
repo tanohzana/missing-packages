@@ -1,4 +1,4 @@
-import fs from 'fs'
+import fs from "fs"
 
 // Find package.json through the deps tree
 const getPackageJsonRecursive = (packagePath, cpt) => {
@@ -39,5 +39,5 @@ const getPackagesInstalled = () => {
   return installedPackagesArray
 }
 
-export { getPackagesInstalled }
+export { getPackagesInstalled, }
 export default getPackageJson

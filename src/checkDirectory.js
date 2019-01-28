@@ -1,9 +1,9 @@
-import fs from 'fs'
+import fs from "fs"
 import uniq from "lodash.uniq"
 
-import checkFile from './checkFile'
+import checkFile from "./checkFile"
 
-function checkDirectoryRecursive(path, knownPackages) {
+const checkDirectoryRecursive = (path, knownPackages) => {
   let localPackages = []
 
   fs.readdirSync(path).forEach((file) => {

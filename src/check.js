@@ -1,11 +1,11 @@
 
-import fs from 'fs'
+import fs from "fs"
 
 import checkFile from "./checkFile"
 import checkDirectory from "./checkDirectory"
 
 // Checks all for packages in file(s)
-function check(path) {
+const check = (path) => {
   let packages = []
   const isDir = fs.lstatSync(path).isDirectory()
 

@@ -19,7 +19,7 @@ var _checkDirectory2 = _interopRequireDefault(_checkDirectory);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 // Checks all for packages in file(s)
-function check(path) {
+var check = function check(path) {
   var packages = [];
   var isDir = _fs2.default.lstatSync(path).isDirectory();
 
@@ -27,6 +27,6 @@ function check(path) {
   packages = isDir ? (0, _checkDirectory2.default)(path, packages) : (0, _checkFile2.default)(path, packages);
 
   return packages;
-}
+};
 
 exports.default = check;

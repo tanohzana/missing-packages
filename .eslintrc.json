@@ -233,7 +233,7 @@
         "prefer-template": "error",
         "quotes": [
             "error",
-            "single"
+            "double"
         ],
         "radix": "error",
         "require-atomic-updates": "error",
