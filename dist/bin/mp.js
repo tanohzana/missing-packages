@@ -1,6 +1,10 @@
 #! /usr/bin/env node
 "use strict";
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
 var _fs = require("fs");
 
 var _fs2 = _interopRequireDefault(_fs);
@@ -53,3 +57,5 @@ var mp = function mp(args) {
 
 var args = process.argv.splice(2);
 mp(args);
+
+exports.default = mp;

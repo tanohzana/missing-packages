@@ -39,3 +39,5 @@ const mp = (args) => {
 
 const args = process.argv.splice(2)
 mp(args)
+
+export default mp
