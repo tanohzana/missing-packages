@@ -1,5 +1,6 @@
 # Missing-packages :cloud: :arrow_right: :sunny:
 [![npm version](https://badge.fury.io/js/missing-packages.svg)](https://badge.fury.io/js/missing-packages)
+[![npm downloads](https://img.shields.io/npm/dt/missing-packages.svg?style=flat)](https://img.shields.io/npm/dt/missing-packages.svg?style=flat)
 [![Build Status](https://travis-ci.com/tanohzana/missing-packages.svg?branch=master)](https://travis-ci.com/tanohzana/missing-packages)
 
 ## What is Missing-packages
