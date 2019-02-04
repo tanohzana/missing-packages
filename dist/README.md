@@ -13,35 +13,41 @@ Missing-packages (mp) is a tool you will love to use whenever you create a NodeJ
 
 ## API
 
+Default usage:
+
+`mp <path>`
+
+will ask to install missing packages found
+
 #### Check missing packages in a file or directory
 
 Go to your project's directory and type:
 
-`mp -c [path]`
+`mp c <path>`
 
 or
 
-`mp --check [path]`
+`mp check <path>`
 
 #### Install missing packages in a file or directory
 
 Go to your project's directory and type:
 
-`mp -i [path]`
+`mp i <path>`
 
 or
 
-`mp --install [path]`
+`mp install <path>`
 
 ## Examples
 
 You can go to the examples/ directory and type:
 
-`mp --install example2.js`
+`mp install example2.js`
 
 or
 
-`mp -c examples`
+`mp c examples`
 
 _This is not perfect but it is getting better by the day_
 

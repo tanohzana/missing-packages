@@ -49,8 +49,8 @@ or
 
 `mp c examples`
 
-_This is not perfect but it is getting better by the day_
+## Contributing
 
-_Do not hesitate to pull request me_
+Go to [Contributing.md](./CONTRIBUTING.md)
 
 :relaxed:
