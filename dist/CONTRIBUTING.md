@@ -4,6 +4,8 @@
 
 It is very easy. In order to contribute to this package source code, one must submit a pull request with an explicit title and descriptiokn that explains what the PR is about. It then shall be reviewed and merged or closed according to code quality and "usefulness".
 
+Please use the provided templates 😉 They are here to help.
+
 ## Todo
 
 - Support ES6 import style
