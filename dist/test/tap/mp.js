@@ -17,6 +17,8 @@ var jsFile1 = "require('uninstalledDep1')";
 var jsFile2 = "require('dep1'); require('dep2')";
 var jsFile3 = "require('dep1'); require('dep3')";
 var jsFile4 = "require('underscore')";
+var jsFile5 = "import x from 'underscore'";
+var jsFile6 = "import { x, y, z } from \"underscore\"";
 
 var server = void 0;
 
@@ -70,6 +72,62 @@ test("mp check simple file", function (t) {
       // Removes special characters and emojis
       var message = stdout.trim().substr(3);
       t.same(message, "Package(s) to install: uninstalledDep1");
+      done();
+    });
+  });
+});
+
+test("mp check simple file with es6 import default", function (t) {
+  var fixture = new Tacks(Dir({
+    "test-mp": Dir({
+      "package.json": File({
+        name: "test-mp",
+        version: "1.0.0",
+        dependencies: {
+          dep1: "installedDep1"
+        }
+      }),
+      "file5.js": File(jsFile5)
+    })
+  }));
+
+  withFixture(t, fixture, function (done) {
+    common.mp(["check", "./file5.js"], {
+      cwd: testDirPath
+    }, function (err, code, stdout, stderr) {
+      t.ifErr(err, "mp succeeded");
+      t.equal(code, 0, "exit 0 on mp");
+      // Removes special characters and emojis
+      var message = stdout.trim().substr(3);
+      t.same(message, "Package(s) to install: underscore");
+      done();
+    });
+  });
+});
+
+test("mp check simple file with es6 import", function (t) {
+  var fixture = new Tacks(Dir({
+    "test-mp": Dir({
+      "package.json": File({
+        name: "test-mp",
+        version: "1.0.0",
+        dependencies: {
+          dep1: "installedDep1"
+        }
+      }),
+      "file6.js": File(jsFile6)
+    })
+  }));
+
+  withFixture(t, fixture, function (done) {
+    common.mp(["check", "./file6.js"], {
+      cwd: testDirPath
+    }, function (err, code, stdout, stderr) {
+      t.ifErr(err, "mp succeeded");
+      t.equal(code, 0, "exit 0 on mp");
+      // Removes special characters and emojis
+      var message = stdout.trim().substr(3);
+      t.same(message, "Package(s) to install: underscore");
       done();
     });
   });

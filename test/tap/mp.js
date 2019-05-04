@@ -16,6 +16,8 @@ const jsFile1 = "require('uninstalledDep1')"
 const jsFile2 = "require('dep1'); require('dep2')"
 const jsFile3 = "require('dep1'); require('dep3')"
 const jsFile4 = "require('underscore')"
+const jsFile5 = "import x from 'underscore'"
+const jsFile6 = "import { x, y, z } from \"underscore\""
 
 let server
 
@@ -69,6 +71,62 @@ test("mp check simple file", (t) => {
       // Removes special characters and emojis
       const message = stdout.trim().substr(3)
       t.same(message, "Package(s) to install: uninstalledDep1")
+      done()
+    })
+  })
+})
+
+test("mp check simple file with es6 import default", (t) => {
+  const fixture = new Tacks(Dir({
+    "test-mp": Dir({
+      "package.json": File({
+        name: "test-mp",
+        version: "1.0.0",
+        dependencies: {
+          dep1: "installedDep1",
+        },
+      }),
+      "file5.js": File(jsFile5),
+    }),
+  }))
+
+  withFixture(t, fixture, (done) => {
+    common.mp(["check", "./file5.js"], {
+      cwd: testDirPath,
+    }, (err, code, stdout, stderr) => {
+      t.ifErr(err, "mp succeeded")
+      t.equal(code, 0, "exit 0 on mp")
+      // Removes special characters and emojis
+      const message = stdout.trim().substr(3)
+      t.same(message, "Package(s) to install: underscore")
+      done()
+    })
+  })
+})
+
+test("mp check simple file with es6 import", (t) => {
+  const fixture = new Tacks(Dir({
+    "test-mp": Dir({
+      "package.json": File({
+        name: "test-mp",
+        version: "1.0.0",
+        dependencies: {
+          dep1: "installedDep1",
+        },
+      }),
+      "file6.js": File(jsFile6),
+    }),
+  }))
+
+  withFixture(t, fixture, (done) => {
+    common.mp(["check", "./file6.js"], {
+      cwd: testDirPath,
+    }, (err, code, stdout, stderr) => {
+      t.ifErr(err, "mp succeeded")
+      t.equal(code, 0, "exit 0 on mp")
+      // Removes special characters and emojis
+      const message = stdout.trim().substr(3)
+      t.same(message, "Package(s) to install: underscore")
       done()
     })
   })
