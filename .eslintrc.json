@@ -58,10 +58,6 @@
         "curly": "error",
         "default-case": "error",
         "dot-notation": "error",
-        "eol-last": [
-            "error",
-            "never"
-        ],
         "eqeqeq": "error",
         "func-call-spacing": "error",
         "func-name-matching": "error",

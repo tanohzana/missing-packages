@@ -4,7 +4,7 @@
   "description": "A simple installer for missing packages in your projects/files",
   "main": "./dist/bin/mp.js",
   "scripts": {
-    "precommit": "yarn lint && yarn build && yarn test",
+    "precommit": "yarn lint && yarn test",
     "test": "yarn build && yarn run test-tap",
     "tap": "tap --reporter=classic --timeout 300",
     "test-tap": "yarn tap -- \"dist/test/tap/*.js\" \"dist/test/network/*.js\" \"dist/test/broken-under-*/*.js\"",
