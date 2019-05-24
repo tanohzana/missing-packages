@@ -1,0 +1,63 @@
+{
+  "name": "mp",
+  "version": "2.0.0",
+  "description": "A simple installer for missing packages in your projects/files",
+  "main": "./dist/bin/mp.js",
+  "scripts": {
+    "precommit": "yarn lint && yarn test",
+    "test": "yarn build && yarn run test-tap",
+    "tap": "tap --reporter=classic --timeout 300",
+    "test-tap": "yarn tap -- \"dist/test/tap/*.js\" \"dist/test/network/*.js\" \"dist/test/broken-under-*/*.js\"",
+    "build": "rimraf dist/ && babel ./ --out-dir dist/ --ignore ./node_modules,./.babelrc,./package.json,./npm-debug.log --copy-files",
+    "commitmsg": "commitlint -e $GIT_PARAMS",
+    "lint": "eslint ./src/*.js ./src/utils/*.js ./bin/*.js"
+  },
+  "bin": {
+    "mp": "./dist/bin/mp.js"
+  },
+  "keywords": [
+    "missing",
+    "packages",
+    "install",
+    "global"
+  ],
+  "author": "Florian Adonis <tanohzana@gmail.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tanohzana/missing-packages.git"
+  },
+  "dependencies": {
+    "bluebird": "^3.5.3",
+    "commander": "^2.14.1",
+    "inquirer": "^4.0.1",
+    "lodash.uniq": "^4.5.0",
+    "npmlog": "^4.1.2",
+    "pkginfo": "^0.4.1",
+    "read": "^1.0.7",
+    "shelljs": "^0.7.8"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^7.0.0",
+    "@commitlint/config-conventional": "^7.0.1",
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.3",
+    "babel-preset-es2015": "^6.24.1",
+    "eslint": "^5.9.0",
+    "husky": "^0.14.3",
+    "jasmine": "^3.1.0",
+    "npm-registry-mock": "^1.1.0",
+    "read-cmd-shim": "^1.0.1",
+    "rimraf": "^2.6.2",
+    "tacks": "^1.3.0",
+    "tap": "^12.4.0"
+  },
+  "bugs": {
+    "url": "https://github.com/tanohzana/missing-packages/issues"
+  },
+  "homepage": "https://github.com/tanohzana/missing-packages#readme",
+  "directories": {
+    "example": "examples",
+    "test": "test"
+  }
+}
