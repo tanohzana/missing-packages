@@ -10,7 +10,7 @@ Missing-packages (mp) is a tool you will love to use whenever you create a NodeJ
 
 1. Open your computer's terminal
 2. Install [NodeJS](http://nodejs.org) if you haven't already
-3. Install the package globally using: `npm i -g missing-packages` or `npx missing-packages [whatever]`
+3. Install the package globally using: `npm i -g mp` or `npx mp [whatever]`
 
 ## API
 
