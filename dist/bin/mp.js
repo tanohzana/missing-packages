@@ -55,7 +55,7 @@ var mp = function mp(args) {
       misuse();
     }
   } catch (error) {
-    console.log(error);
+    console.log(error.message);
   }
 };
 
