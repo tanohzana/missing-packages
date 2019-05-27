@@ -8,32 +8,36 @@ import check from "../src/check"
 import { getPackagesInstalled, } from "../src/utils/getPackageJson"
 
 const misuse = () => {
-  // eslint-disable-next-line no-console
   console.log("MP was misused. Go to README");
 }
 
 const mp = (args) => {
   const firstParam = args.shift()
   const secondParam = args.shift()
-  const packagesInstalled = getPackagesInstalled()
 
-  if ((firstParam === "i" || firstParam === "install") && fs.existsSync(`${process.cwd()}/${secondParam}`)) {
-    const filePath = `${process.cwd()}/${secondParam}`
-    const packagesToInstall = check(filePath)
+  try {
+    const packagesInstalled = getPackagesInstalled()
 
-    installPackages(packagesToInstall, packagesInstalled)
-  } else if ((firstParam === "c" || firstParam === "check") && fs.existsSync(`${process.cwd()}/${secondParam}`)) {
-    const filePath = `${process.cwd()}/${secondParam}`
-    const packagesToInstall = check(filePath)
+    if ((firstParam === "i" || firstParam === "install") && fs.existsSync(`${process.cwd()}/${secondParam}`)) {
+      const filePath = `${process.cwd()}/${secondParam}`
+      const packagesToInstall = check(filePath)
 
-    displayPackages(packagesToInstall, packagesInstalled)
-  } else if (fs.existsSync(`${process.cwd()}/${firstParam}`)) {
-    const filePath = `${process.cwd()}/${firstParam}`
-    const packagesToInstall = check(filePath)
+      installPackages(packagesToInstall, packagesInstalled)
+    } else if ((firstParam === "c" || firstParam === "check") && fs.existsSync(`${process.cwd()}/${secondParam}`)) {
+      const filePath = `${process.cwd()}/${secondParam}`
+      const packagesToInstall = check(filePath)
 
-    installPackages(packagesToInstall, packagesInstalled)
-  } else {
-    misuse()
+      displayPackages(packagesToInstall, packagesInstalled)
+    } else if (fs.existsSync(`${process.cwd()}/${firstParam}`)) {
+      const filePath = `${process.cwd()}/${firstParam}`
+      const packagesToInstall = check(filePath)
+
+      installPackages(packagesToInstall, packagesInstalled)
+    } else {
+      misuse()
+    }
+  } catch (error) {
+    console.log(error.message)
   }
 }
 
