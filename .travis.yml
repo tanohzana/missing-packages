@@ -5,9 +5,10 @@ node_js:
 script: echo "Running tests against $(node -v) !"
 
 jobs:
-  - stage: version bump
-    node_js: "node"
-    script: echo "Getting current branch name"
-    script:
-     - export BRANCH=$(if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then echo $TRAVIS_BRANCH; else echo $TRAVIS_PULL_REQUEST_BRANCH; fi)
-     - echo "TRAVIS_BRANCH=$TRAVIS_BRANCH, PR=$PR, BRANCH=$BRANCH"
+  include:
+    - stage: version bump
+      node_js: "node"
+      script: echo "Getting current branch name"
+      script:
+      - export BRANCH=$(if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then echo $TRAVIS_BRANCH; else echo $TRAVIS_PULL_REQUEST_BRANCH; fi)
+      - echo "TRAVIS_BRANCH=$TRAVIS_BRANCH, PR=$PR, BRANCH=$BRANCH"
