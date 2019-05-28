@@ -1,3 +1,13 @@
 language: node_js
 node_js:
   - "node"
+
+script: echo "Running tests against $(node -v) !"
+
+deploy:
+  provider: "npm"
+  email: "tanohzana@gmail.com"
+  api_key:
+    secure: SHro/aiQPvIcvCOJw2YHRaSRujCr2PJ50qlPWoTlyKY6Ngr9QBdl4FReg7ADh+JFSEmt0Twk8AXtG/SgeF+ea7RUMjqMoC8eltSFN5owBtsVgJHiLF5xy1pIVqGe9jn+CZMewcjkfN+KjGOWOpJmQMxh1J0ntEoUkIoG9DG5QDu0wgeru/V4s65uNgbR+YQHcwTEiwpTYiJgGkubKAOFZQ9KGrXWAbPxyzyvfA7Vt0CdV1adkBXi9xjveAMZsUlQ5bh4Z4MZ1SMNHxr774/15dFIMSDOoYLlbogJF3Oc9SBWKHU95/aJc1852luYgzXfDLlIGS7Xn+hdWkSvUyUjjibODCj7NaXa5FWQiCpZElzCgHUqclFi6hFvXh81O1tepjZGki65u0yDzvY5dK/5SCI39i8h/LTy1xX1o11CcX9PYQhTVEe9xMwTqOKjOpbFqdblyCsKhiCT3P8BVLjEcTzlErArti5W3CN10VQQJkgM8a+LmZ3GzDu2FavbWQRUgMLj6Bng1V8OyZ5I4CcSXpL+171JRsg2O/POsiQfUv7+0lCuOu2BZJD0vG+w5qxUVr3KDd2XN9mUpAUGh2bhIsj1+IddzisuarWd7Br+T1wiXqi3JF5f1KTHrB8T2PkQZ1Jd7+gntvdoMu5FeVFnXoi9BR3MoCrJ9t36QfVv4xg=
+  on:
+    branch: master
