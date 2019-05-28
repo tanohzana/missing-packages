@@ -10,5 +10,6 @@ jobs:
       node_js: "node"
       script: echo "Getting current branch name"
       script:
-      - export BRANCH=$(if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then echo $TRAVIS_BRANCH; else echo $TRAVIS_PULL_REQUEST_BRANCH; fi)
-      - echo "TRAVIS_BRANCH=$TRAVIS_BRANCH, PR=$PR, BRANCH=$BRANCH"
+        - export BRANCH=$(if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then echo $TRAVIS_BRANCH; else echo $TRAVIS_PULL_REQUEST_BRANCH; fi)
+        - export BRANCH_TYPE=$(echo $BRANCH | cut -f1 -d/)
+        - echo $BRANCH_TYPE
