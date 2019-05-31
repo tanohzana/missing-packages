@@ -25,8 +25,25 @@ var _getPackageJson = require("../src/utils/getPackageJson");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+var showHelp = function showHelp() {
+  console.log("Help:");
+  console.log("");
+  console.log("Missing-packages 📦");
+  console.log("");
+  console.log("Usage: mp [command] <path>");
+  console.log("Commands: install (or i), check (or c)");
+  console.log("");
+  console.log("* mp i <path>");
+  console.log("will look into the folder or file and ask to install all dependencies that are not in the package.json file");
+  console.log("");
+  console.log("* mp check <path>");
+  console.log("will look into the folder or file and just display all dependencies that are not in the package.json file");
+};
+
 var misuse = function misuse() {
-  console.log("MP was misused. Go to README");
+  console.log(" ❌ MP was misused. Please refer to README or see help");
+  console.log("");
+  showHelp();
 };
 
 var mp = function mp(args) {
@@ -36,7 +53,9 @@ var mp = function mp(args) {
   try {
     var packagesInstalled = (0, _getPackageJson.getPackagesInstalled)();
 
-    if ((firstParam === "i" || firstParam === "install") && _fs2.default.existsSync(process.cwd() + "/" + secondParam)) {
+    if (firstParam === "-h" || firstParam === "h" || firstParam === "help" || firstParam === "--help") {
+      showHelp();
+    } else if ((firstParam === "i" || firstParam === "install") && _fs2.default.existsSync(process.cwd() + "/" + secondParam)) {
       var filePath = process.cwd() + "/" + secondParam;
       var packagesToInstall = (0, _check2.default)(filePath);
 
