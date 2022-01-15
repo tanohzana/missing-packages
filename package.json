@@ -35,7 +35,7 @@
     "npmlog": "^4.1.2",
     "pkginfo": "^0.4.1",
     "read": "^1.0.7",
-    "shelljs": "^0.7.8"
+    "shelljs": "^0.8.5"
   },
   "devDependencies": {
     "@commitlint/cli": "^7.0.0",
